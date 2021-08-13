@@ -1,0 +1,148 @@
+<!--
+ Copyright (c) 2014, 2020, Oracle and/or its affiliates.
+ Licensed under The Universal Permissive License (UPL), Version 1.0
+ as shown at https://oss.oracle.com/licenses/upl/
+ -->
+ <STYLE TYPE="text/css">
+
+  .demo-table-checkbox {
+      min-width: auto !important; 
+  }
+  .demo-table-container {
+      width: 100%;
+      height: 27rem;
+  }
+  .editable {
+      width: 2em !important;
+  }
+    
+</STYLE>
+
+<SCRIPT>      
+    
+</SCRIPT>
+ 
+<div class="oj-hybrid-padding">
+  <h1>B2B Site Accounts</h1>
+  <div>
+      To change the content of this section, you will make edits to the dashboard.html file located in the /js/views folder.                        
+  </div> 
+  
+  <br>
+  <br>   
+  
+  <div id="componentDemoContent" class="oj-flex">
+  
+  <div id="tableWrapper" class="oj-xl-9 oj-lg-9 oj-md-12 oj-sm-12 oj-flex-item oj-flex">
+      <oj-table id="table"
+              aria-label="Departments Table"
+              class='oj-bg-body demo-table-container'
+              data='[[datasource]]'
+              edit-mode='rowEdit'
+              edit-row='{{editRow}}'
+              on-oj-before-row-edit='[[beforeRowEditListener]]'
+              on-oj-before-row-edit-end='[[beforeRowEditEndListener]]'
+              columns-default.sortable='disabled'
+              layout="fixed"
+              columns='[{"field": "id",
+                          "headerText": "Id",                                                  
+                          "template": "readOnlyTemplate"},
+                        {"field": "client",
+                          "headerText": "Client",                                                    
+                          "template": "clientTemplate"},
+                        {"field": "holding",
+                          "headerText": "Holding",                                                    
+                          "template": "holdingTemplate"},                          
+                        {"field":"user",
+                          "headerText": "User",
+                          "weight": "2",
+                          "minWidth": "10rem",
+                          "template": "userTemplate"},
+                        {"field":"password",
+                          "headerText": "Password",
+                          "minWidth": "8rem",
+                          "weight": "2",
+                          "template": "passwordTemplate"},
+                        {"field":"company",
+                          "weight": "2",
+                          "minWidth": "10rem",
+                          "headerText": "Company",
+                          "template": "companyTemplate"},                        
+                        {"headerText": "Action",
+                          "width": "6.2rem",
+                          "headerStyle": "text-align: center;",
+                          "style":"padding-top: 0px; padding-bottom: 0px; text-align: center;",
+                          "template": "actionTemplate"}]'>
+
+      <template slot="readOnlyTemplate" data-oj-as="cell">
+        <oj-bind-text value="[[cell.data]]"></oj-bind-text>
+      </template>  
+          
+      <template slot="clientTemplate" data-oj-as="cell">
+        <oj-bind-text value="[[cell.data.name]]"></oj-bind-text>
+      </template> 
+          
+      <template slot="holdingTemplate" data-oj-as="cell">
+        <oj-bind-text value="[[cell.data.name]]"></oj-bind-text>
+      </template> 
+
+      <template slot="userTemplate" data-oj-as="cell">
+        <oj-bind-if test='[[cell.mode=="navigation"]]'>
+          <oj-bind-text value="[[cell.data]]"></oj-bind-text>
+        </oj-bind-if>
+
+        <oj-bind-if test='[[cell.mode=="edit"]]'>            
+          <oj-input-text id="it1" value="{{rowData.user}}" class="editable"></oj-input-text>
+        </oj-bind-if>
+      </template>
+        
+      <template slot="passwordTemplate" data-oj-as="cell">
+        <oj-bind-if test='[[cell.mode=="navigation"]]'>
+          <oj-bind-text value="[[cell.data]]"></oj-bind-text>
+        </oj-bind-if>
+
+        <oj-bind-if test='[[cell.mode=="edit"]]'>
+          <oj-input-text id="it2" value="{{rowData.password}}" class="editable"></oj-input-text>
+        </oj-bind-if>
+      </template>
+        
+      <template slot="companyTemplate" data-oj-as="cell">
+        <oj-bind-if test='[[cell.mode=="navigation"]]'>
+          <oj-bind-text value="[[cell.data]]"></oj-bind-text>
+        </oj-bind-if>
+
+        <oj-bind-if test='[[cell.mode=="edit"]]'>
+          <oj-input-text id="it3" value="{{rowData.company}}" class="editable"></oj-input-text>
+        </oj-bind-if>
+      </template>
+        
+      <template slot="actionTemplate" data-oj-as="cell">
+        <oj-bind-if test='[[cell.mode=="navigation"]]'>
+          <oj-button display='icons' chroming='borderless' on-oj-action="[[handleUpdate]]">
+            <span slot='startIcon' class="oj-ux-ico-edit"></span>
+            Edit
+          </oj-button>
+        </oj-bind-if>
+
+        <oj-bind-if test='[[cell.mode=="edit"]]'>
+          <oj-toolbar chroming='borderless' class="oj-sm-padding-0-vertical">
+            <oj-button display='icons' on-oj-action="[[handleDone]]">
+              <span slot='startIcon' class="oj-ux-ico-check"></span>
+              Save
+            </oj-button>
+            <oj-button display='icons' on-oj-action="[[handleCancel]]">
+              <span slot='startIcon' class="oj-ux-ico-multiply"></span>
+              Cancel
+            </oj-button>
+          </oj-toolbar>
+        </oj-bind-if>
+      </template>
+    </oj-table>
+    <br>
+    <br>   
+      
+  </div>
+      
+</div>
+  
+</div>
